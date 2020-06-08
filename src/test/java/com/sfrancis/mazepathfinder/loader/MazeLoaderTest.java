@@ -11,10 +11,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static com.sfrancis.mazepathfinder.matcher.IsPath.aPath;
 import static com.sfrancis.mazepathfinder.maze.Location.aLocation;
+import static java.nio.charset.StandardCharsets.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -22,8 +24,8 @@ public class MazeLoaderTest {
 
     @Test
     public void shouldCreateAMazeFromAReader() throws Exception {
-        Reader reader = givenAValidMaze();
-        Maze maze = new MazeLoader().createFrom(reader);
+        final Reader reader = givenAValidMaze();
+        final Maze maze = new MazeLoader().createFrom(reader);
         assertThat(maze.getStart(), is(aLocation(0, 4)));
         assertThat(maze.getFinish(), is(aLocation(10, 7)));
         assertThat(maze.isASpace(aLocation(2, 6)), is(true));
@@ -32,7 +34,7 @@ public class MazeLoaderTest {
 
     @Test(expected = InvalidMazeFileException.class)
     public void shouldFailToLoadInvalidFile() throws Exception {
-        InputStreamReader reader = givenAnInvalidMaze();
+        final InputStreamReader reader = givenAnInvalidMaze();
         new MazeLoader().createFrom(reader);
     }
 
@@ -45,14 +47,14 @@ public class MazeLoaderTest {
         assertThat(pathThrough, is(expectedPath()));
     }
 
-    private InputStreamReader givenAValidMaze() throws UnsupportedEncodingException {
-        InputStream resourceAsStream = this.getClass().getResourceAsStream("/TestMaze.txt");
-        return new InputStreamReader(resourceAsStream, "UTF8");
+    private InputStreamReader givenAValidMaze() {
+        final InputStream resourceAsStream = this.getClass().getResourceAsStream("/TestMaze.txt");
+        return new InputStreamReader(resourceAsStream, UTF_8);
     }
 
-    private InputStreamReader givenAnInvalidMaze() throws UnsupportedEncodingException {
-        InputStream resourceAsStream = this.getClass().getResourceAsStream("/InvalidMaze.txt");
-        return new InputStreamReader(resourceAsStream, "UTF8");
+    private InputStreamReader givenAnInvalidMaze() {
+        final InputStream resourceAsStream = this.getClass().getResourceAsStream("/InvalidMaze.txt");
+        return new InputStreamReader(resourceAsStream, UTF_8);
     }
 
     private IsPath expectedPath() {

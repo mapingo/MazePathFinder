@@ -1,11 +1,11 @@
 package com.sfrancis.mazepathfinder.loader;
 
 public class InvalidMazeFileException extends RuntimeException {
-    public InvalidMazeFileException(String message) {
+    public InvalidMazeFileException(final String message) {
         super(message);
     }
 
-    public InvalidMazeFileException(String message, Exception e) {
+    public InvalidMazeFileException(final String message, final Exception e) {
         super(message, e);
     }
 }

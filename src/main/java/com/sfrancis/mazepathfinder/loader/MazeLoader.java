@@ -10,34 +10,41 @@ import java.io.Reader;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.sfrancis.mazepathfinder.maze.MazePart.SPACE;
+import static com.sfrancis.mazepathfinder.maze.MazePart.WALL;
+
 public class MazeLoader {
-    public Maze createFrom(Reader reader) {
+    public Maze createFrom(final Reader reader) {
         try {
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            Location start = parseLocation(bufferedReader.readLine());
-            Location finish = parseLocation(bufferedReader.readLine());
-            List<List<MazePart>> mazeParts = bufferedReader.lines().map(this::createMaze).collect(Collectors.toList());
+            final BufferedReader bufferedReader = new BufferedReader(reader);
+            final Location start = parseLocation(bufferedReader.readLine());
+            final Location finish = parseLocation(bufferedReader.readLine());
+            final List<List<MazePart>> mazeParts = bufferedReader.lines().map(this::createMaze).collect(Collectors.toList());
+
             return new DefaultMaze(start, finish, mazeParts);
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new InvalidMazeFileException("Failed to load maze file.", e);
         }
     }
 
-    private Location parseLocation(String line) {
-        String[] splitAtEquals = line.split("=");
-        String[] values = splitAtEquals[1].split(",");
+    private Location parseLocation(final String line) {
+        final String[] splitAtEquals = line.split("=");
+        final String[] values = splitAtEquals[1].split(",");
         return Location.aLocation(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
     }
 
-    private List<MazePart> createMaze(String line) {
+    private List<MazePart> createMaze(final String line) {
         return line.chars().mapToObj(c -> createMazePart((char) c)).collect(Collectors.toList());
     }
 
-    private MazePart createMazePart(char c) {
-        switch(c) {
-            case ' ': return MazePart.SPACE;
-            case '*': return MazePart.WALL;
-            default: throw new InvalidMazeFileException("Invalid maze file.");
+    private MazePart createMazePart(final char c) {
+        switch (c) {
+            case ' ':
+                return SPACE;
+            case '*':
+                return WALL;
+            default:
+                throw new InvalidMazeFileException("Invalid maze file.");
         }
     }
 }

@@ -28,8 +28,8 @@ public class DefaultMaze implements Maze {
     }
 
     public boolean isNotOutOfBounds(final Location location) {
-        final Integer x = location.getX();
-        final Integer y = location.getY();
+        final int x = location.getX();
+        final int y = location.getY();
 
         return x >= 0 &&
                 y >= 0 &&

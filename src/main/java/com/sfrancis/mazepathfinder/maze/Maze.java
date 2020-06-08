@@ -5,7 +5,7 @@ public interface Maze {
 
     Location getFinish();
 
-    boolean isASpace(Location location);
+    boolean isASpace(final Location location);
 
-    boolean isNotOutOfBounds(Location location);
+    boolean isNotOutOfBounds(final Location location);
 }

@@ -58,10 +58,10 @@ public class Location {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof Location)) return false;
-        Location location = (Location) o;
+        final Location location = (Location) o;
         return Objects.equals(x, location.x) &&
                 Objects.equals(y, location.y);
     }
